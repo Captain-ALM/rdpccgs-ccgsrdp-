@@ -1,0 +1,760 @@
+'Program Distribution - GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
+'(c) Captain ALM 2013-2017 (I allow Distribution(IaD))
+dir = Program.Directory
+list = ""
+files = ""
+alt = ""
+cgui = 0
+lastbutton = ""
+isconnected = ""
+hasconnection = "False"
+hasconnection2 = "False"
+hasconnection3 = "False"
+hasconnection4 = "False"
+clkbutton = "False"
+process = 0
+website = "http://captainalm.ddns.net/download/ccgsrdp.txt"
+website2 = "https://sites.google.com/site/captainalm00000/download-index/ccgsrdp.txt"
+hasupdate = "False"
+tmpfolder = LDText.Replace(LDFile.TempFolder,"\","/")
+forceupdateinst = "False"
+doping = "True"
+indextoset = 1
+autostart = "False"
+checkforupdates = "True"
+hasupdate = "False"
+crlf = Text.GetCharacter(13) + Text.GetCharacter(10)
+
+GraphicsWindow.Show()
+GraphicsWindow.Title = "CALM CCGS REMOTE DESKTOP LAUNCHER 1.3.0 LOADING..."
+LDCursors.Wait()
+LDUtilities.ShowErrors = "False"
+GraphicsWindow.CanResize = "False"
+GraphicsWindow.Top = 0
+GraphicsWindow.Left = 0
+LDGraphicsWindow.Icon = Program.Directory+"\icon.ico"
+GraphicsWindow.Width = 500
+GraphicsWindow.Height = 150
+GraphicsWindow.BackgroundColor = "Gray"
+splashimg = ImageList.LoadImage(Program.Directory+"\splash.png")
+splash = Shapes.AddImage(splashimg)
+LDShapes.ZIndex(splash,7)
+init()
+LDCursors.Arrow()
+GraphicsWindow.Title = "CALM CCGS REMOTE DESKTOP LAUNCHER 1.3."+data[3]
+runtime()
+
+Sub readargs
+  If Program.ArgumentCount > 0 Then
+    For i = 1 To Program.ArgumentCount Step 1
+      carg = Program.GetArgument(i)
+      If Text.IsSubText(carg, "=") Then
+        cargnom = Text.GetSubText(carg, 1, Text.GetIndexOf(carg, "=") - 1)
+        cargdat = Text.GetSubTextToEnd(carg, Text.GetIndexOf(carg, "=") + 1)
+        hasargdat = "True"
+      Else
+        cargnom = carg
+        cargdat = ""
+        hasargdat = "False"
+      EndIf
+      If (Text.IsSubText(cargnom, "nu") Or Text.IsSubText(cargnom, "noupdates")) And hasargdat <> "True" Then
+        checkforupdates = "False"
+      EndIf
+      If (Text.IsSubText(cargnom, "hu") Or Text.IsSubText(cargnom, "haveupdates")) And hasargdat <> "True" Then
+        checkforupdates = "True"
+      EndIf
+      If (Text.IsSubText(cargnom, "np") Or Text.IsSubText(cargnom, "noping")) And hasargdat <> "True" Then
+        doping  = "False"
+      EndIf
+      If (Text.IsSubText(cargnom, "hp") Or Text.IsSubText(cargnom, "haveping")) And hasargdat <> "True" Then
+        doping = "True"
+      EndIf
+      If (Text.IsSubText(cargnom, "as") Or Text.IsSubText(cargnom, "autostart")) And hasargdat <> "True" Then
+        autostart = "True"
+      EndIf
+      If (Text.IsSubText(cargnom, "i") Or Text.IsSubText(cargnom, "index")) And hasargdat Then
+        If LDUtilities.IsNumber(cargdat) then
+          If cargdat > 0 then
+            indextoset = cargdat
+          EndIf
+        EndIf
+      EndIf
+      If (Text.IsSubText(cargnom, "u") Or Text.IsSubText(cargnom, "update")) And hasargdat Then
+        If LDFile.Exists(cargdat) then
+          chkcop = File.CopyFile(cargdat,tmpfolder+"/ccgsrdpdata.zip")
+          If chkcop = "SUCCESS" then
+            forceupdateinst = "True"
+          EndIf
+        EndIf
+      EndIf
+      If (Text.IsSubText(cargnom, "h") Or Text.IsSubText(cargnom, "?") Or Text.IsSubText(cargnom, "help")) Then
+        GraphicsWindow.ShowMessage("Command Line Help: " + crlf + "This help message: -h, -?, -help" + crlf + "No startup updating: -nu, -noupdates" + crlf + "Have startup updating: -hu, -haveupdates" + crlf + "No ping checks: -np, -noping" + crlf + "Have ping checks: -hp, -haveping" + crlf + "Autostart selected connection: -as, -autostart" + crlf + "Select startup connection index: -i=%index%, -index%index%" + crlf + "Manual update file: -u=%updatefilepath%, -update=%updatefilepath%",GraphicsWindow.Title)
+      EndIf
+    EndFor
+  EndIf
+EndSub
+
+Sub runtime
+  While "True"
+    If autostart Then
+      autostart = "False"
+      LDControls.ProgressBarValue(pbar,0)
+      GraphicsWindow.Height = 150
+      GraphicsWindow.Width = 500
+      Shapes.ShowShape(covshape)
+      Shapes.ShowShape(tlod)
+      Shapes.ShowShape(pbar)
+      Shapes.SetText(tlod,"Checking Connections...")
+      ping1()
+      LDControls.ProgressBarValue(pbar,100)
+      Shapes.HideShape(covshape)
+      Shapes.HideShape(tlod)
+      Shapes.HideShape(pbar)
+      If hasconnection then
+        hidegui()
+        cgui = 2
+        showgui()
+        isconnected = "True"
+        Shapes.SetText(gui[2][1],"Remote Connection Started...")
+        Shapes.HideShape(gui[2][3])
+        Shapes.HideShape(gui[2][4])
+        process = LDProcess.Start("C:\WINDOWS\system32\mstsc.exe",Program.Directory+"\"+files[LDControls.ComboBoxGetSelected(gui[1][2])])
+        If process = "-1" then
+          isconnected = "False"
+          'error 2 could not start MSTSC %major%
+          LDSound.Beep()
+          Program.Delay(1000)
+          LDSound.Beep()
+          GraphicsWindow.ShowMessage("Could not start MSTSC (Microsoft Terminal Service Client), Error code 2.",GraphicsWindow.Title)
+          hidegui()
+          cgui = 1
+          showgui()
+        EndIf
+      Else
+        hidegui()
+        cgui = 1
+        showgui()
+      EndIf
+    EndIf
+    If clkbutton Then
+      If lastbutton = exit Then
+        Program.End()
+      ElseIf lastbutton = about then
+        LDSound.Beep()
+        GraphicsWindow.ShowMessage("About "+GraphicsWindow.Title+" on winx86 using .net framework 3.5, Created by Captain ALM (Independant developer).                   Program Distribution - GNU GENERAL PUBLIC LICENSE Version 3, June 2007.          (c) Captain ALM 2013-2017 (I allow Distribution(IaD))                                       Contact at: captainalm00000@gmail.com                                                                        Report Bugs on the youtube showcase  comments using the help button           (video for ver:1.3).",GraphicsWindow.Title)
+      elseif lastbutton = help then
+        chk = LDProcess.Start("C:\Program Files\Internet Explorer\iexplore.exe",data[5])
+        If chk = "-1" Then
+          'error 3 could not start IE %minor%
+          LDSound.Beep()
+          GraphicsWindow.ShowMessage("Could not start IE, Error code 3.",GraphicsWindow.Title)
+        EndIf
+      elseif lastbutton = start then
+        LDControls.ProgressBarValue(pbar,0)
+        GraphicsWindow.Height = 150
+        GraphicsWindow.Width = 500
+        Shapes.ShowShape(covshape)
+        Shapes.ShowShape(tlod)
+        Shapes.ShowShape(pbar)
+        Shapes.SetText(tlod,"Checking Connections...")
+        ping1()
+        LDControls.ProgressBarValue(pbar,100)
+        Shapes.HideShape(covshape)
+        Shapes.HideShape(tlod)
+        Shapes.HideShape(pbar)
+        If hasconnection then
+          hidegui()
+          cgui = 2
+          showgui()
+          isconnected = "True"
+          Shapes.SetText(gui[2][1],"Remote Connection Started...")
+          Shapes.HideShape(gui[2][3])
+          Shapes.HideShape(gui[2][4])
+          process = LDProcess.Start("C:\WINDOWS\system32\mstsc.exe",Program.Directory+"\"+files[LDControls.ComboBoxGetSelected(gui[1][2])])
+          If process = "-1" then
+            isconnected = "False"
+            'error 2 could not start MSTSC %major%
+            LDSound.Beep()
+            Program.Delay(1000)
+            LDSound.Beep()
+            GraphicsWindow.ShowMessage("Could not start MSTSC (Microsoft Terminal Service Client), Error code 2.",GraphicsWindow.Title)
+            hidegui()
+            cgui = 1
+            showgui()
+          EndIf
+        Else
+          hidegui()
+          cgui = 1
+          showgui()
+        EndIf
+      elseif lastbutton = close then
+        If isconnected then
+          chk = LDProcess.Stop(process)
+          If chk <> "True" then
+            ''error 4 could not stop MSTSC %minor%
+            LDSound.Beep()
+            GraphicsWindow.ShowMessage("Could not stop MSTSC (Microsoft Terminal Service Client), Error code 4.",GraphicsWindow.Title)
+          EndIf
+          isconnected = "False"
+          Shapes.SetText(gui[2][1],"Did Remote Desktop Connection Work?")
+          Shapes.ShowShape(gui[2][3])
+          Shapes.ShowShape(gui[2][4])
+        Else
+          hidegui()
+          cgui = 1
+          showgui()
+        EndIf
+      elseif lastbutton = no then
+        LDControls.ComboBoxSelect(gui[1][2],alt[LDControls.ComboBoxGetSelected(gui[1][2])])
+        hidegui()
+        cgui = 1
+        showgui()
+      elseif lastbutton = yes then
+        hidegui()
+        cgui = 1
+        showgui()
+      ElseIf lastbutton = butupchk then
+        LDControls.ProgressBarValue(pbar,0)
+        GraphicsWindow.Height = 150
+        GraphicsWindow.Width = 500
+        Shapes.ShowShape(covshape)
+        Shapes.ShowShape(tlod)
+        Shapes.ShowShape(pbar)
+        Shapes.SetText(tlod,"Checking for Updates...")
+        chkup()
+        LDControls.ProgressBarValue(pbar,100)
+        If hasupdate Then
+          LDControls.ProgressBarValue(pbar,100)
+          Shapes.SetText(tlod,"Preparing to Update...")
+          LDControls.ProgressBarValue(pbar,0)
+          
+          LDSound.Beep()
+          Shapes.SetText(tlod,"Downloading Update...")
+          upchk = ldinline.Call("calmsbdlwrapper.main.downloadfile","1="+updatlink+";2="+tmpfolder+"/ccgsrdpdata.zip;")
+          If upchk = "false" Then
+            Shapes.SetText(tlod,"Update download failed...")
+            LDControls.ProgressBarValue(pbar,100)
+            LDSound.Beep()
+            Program.Delay(1000)
+            finishload()
+            Goto loadend2
+          EndIf
+          LDControls.ProgressBarValue(pbar,55)
+          
+          LDSound.Beep()
+          Shapes.SetText(tlod,"Checking Update Hash...")
+          upchk = LDEncryption.MD5HashFile(LDFile.TempFolder+"\ccgsrdpdata.zip")
+          If upchk <> updathash Then
+            Shapes.SetText(tlod,"Update hash invalid...")
+            LDControls.ProgressBarValue(pbar,100)
+            LDSound.Beep()
+            Program.Delay(1000)
+            finishload()
+            Goto loadend2
+          EndIf
+          LDControls.ProgressBarValue(pbar,60)
+          
+          Shapes.SetText(tlod,"Extracting and Installing Update...")
+          LDSound.Beep()
+          upchk = LDZip.UnZip(LDFile.TempFolder+"\ccgsrdpdata.zip",dir)
+          If upchk <> "" Then
+            Shapes.SetText(tlod,"Update failed, manually downloading is recommended...")
+            LDControls.ProgressBarValue(pbar,100)
+            LDSound.Beep()
+            Program.Delay(1000)
+            finishload()
+            Goto loadend2
+          EndIf
+          LDControls.ProgressBarValue(pbar,85)
+          
+          LDZip.UnZip(dir+"\ccgsrdpscut.zip",dir+"\shortcuts")
+          LDZip.UnZip(dir+"\ccgsrdpscut.zip","C:\ccgsrdp-shortcuts")
+          LDControls.ProgressBarValue(pbar,99)
+          
+          Shapes.SetText(tlod,"Cleaning Temporary files...")
+          File.DeleteFile(LDFile.TempFolder+"\ccgsrdpdata.zip")
+          File.DeleteFile(dir+"\ccgsrdpscut.zip")
+          LDControls.ProgressBarValue(pbar,100)
+          
+          Shapes.SetText(tlod,"Update installaition finished!!!")
+          LDControls.ProgressBarValue(pbar,100)
+          LDSound.Beep()
+          LDInline.Call("sbrestart.main.restartprogram","restarted")
+          Program.End()
+        EndIf
+        loadend2:
+        Shapes.HideShape(covshape)
+        Shapes.HideShape(tlod)
+        Shapes.HideShape(pbar)
+        hidegui()
+        cgui = 1
+        showgui()
+      EndIf
+      clkbutton = "False"
+    EndIf
+    
+    If isconnected Then
+      cprocesses = LDProcess.GetProcesses()
+      If cprocesses[process] = "" then
+        isconnected = "False"
+        Shapes.SetText(gui[2][1],"Did Remote Desktop Connection Work?")
+        Shapes.ShowShape(gui[2][3])
+        Shapes.ShowShape(gui[2][4])
+        LDWindows.Active = 0
+      EndIf
+    EndIf
+    Program.Delay(150)
+  EndWhile
+EndSub
+
+Sub init
+  GraphicsWindow.BrushColor = "Green"
+  pbar = LDControls.AddProgressBar(500,150,"H")
+  LDShapes.ZIndex(pbar,5)
+  GraphicsWindow.BrushColor = "Black"
+  GraphicsWindow.FontSize = 16
+  tlod = Shapes.AddText("Intalizing...")
+  Shapes.Move(tlod,5,65)
+  LDShapes.ZIndex(tlod,5)
+  GraphicsWindow.Width = 500
+  GraphicsWindow.Height = 150
+  Program.Delay(50)
+  readargs()
+  LDShapes.ZIndex(splash,0)
+  Shapes.Remove(splash)
+  covshape = Shapes.AddRectangle(GraphicsWindow.Width,GraphicsWindow.Height)
+  Shapes.SetOpacity(covshape,45)
+  LDShapes.ZIndex(covshape,3)
+  Shapes.HideShape(covshape)
+  LDInline.LoadDLL(dir+"\calmsbdlwrapper.dll")
+  LDInline.LoadDLL(dir+"\restartsblib.dll")
+  
+  Shapes.SetText(tlod,"Checking connections...")
+  ping1()
+  LDControls.ProgressBarValue(pbar,3)
+  ping2()
+  LDControls.ProgressBarValue(pbar,5)
+  ping3()
+  LDControls.ProgressBarValue(pbar,8)
+  ping4()
+  LDControls.ProgressBarValue(pbar,10)
+  
+  Shapes.SetText(tlod,"Loading data file...")
+  readdatafiles()
+  LDControls.ProgressBarValue(pbar,20)
+  ddatafiles()
+  LDControls.ProgressBarValue(pbar,50)
+  
+  Shapes.SetText(tlod,"Init GUI...")
+  initgui()
+  LDControls.ProgressBarValue(pbar,90)
+  
+  Shapes.SetText(tlod,"Checking for Updates...")
+  If checkforupdates Then
+    chkup()
+  EndIf
+  LDControls.ProgressBarValue(pbar,95)
+  
+  If hasupdate or forceupdateinst Then
+    LDControls.ProgressBarValue(pbar,100)
+    Shapes.SetText(tlod,"Preparing to Update...")
+    LDControls.ProgressBarValue(pbar,0)
+    If forceupdateinst Then
+      Goto skpupdatdl
+    EndIf
+    
+    LDSound.Beep()
+    Shapes.SetText(tlod,"Downloading Update...")
+    upchk = ldinline.Call("calmsbdlwrapper.main.downloadfile","1="+updatlink+";2="+tmpfolder+"/ccgsrdpdata.zip;")
+    If upchk = "false" Then
+      Shapes.SetText(tlod,"Update download failed...")
+      LDControls.ProgressBarValue(pbar,100)
+      LDSound.Beep()
+      Program.Delay(1000)
+      finishload()
+      Goto loadend
+    EndIf
+    LDControls.ProgressBarValue(pbar,55)
+    
+    LDSound.Beep()
+    Shapes.SetText(tlod,"Checking Update Hash...")
+    upchk = LDEncryption.MD5HashFile(LDFile.TempFolder+"\ccgsrdpdata.zip")
+    If upchk <> updathash Then
+      Shapes.SetText(tlod,"Update hash invalid...")
+      LDControls.ProgressBarValue(pbar,100)
+      LDSound.Beep()
+      Program.Delay(1000)
+      finishload()
+      Goto loadend
+    EndIf
+    LDControls.ProgressBarValue(pbar,60)
+    
+    skpupdatdl:
+    
+    LDSound.Beep()
+    Shapes.SetText(tlod,"Extracting and Installing Update...")
+    upchk = LDZip.UnZip(LDFile.TempFolder+"\ccgsrdpdata.zip",dir)
+    If upchk <> "" Then
+      LDSound.Beep()
+      Shapes.SetText(tlod,"Update failed, manually downloading is recommended...")
+      LDControls.ProgressBarValue(pbar,100)
+      Program.Delay(1000)
+      finishload()
+      Goto loadend
+    EndIf
+    LDControls.ProgressBarValue(pbar,85)
+    
+    LDZip.UnZip(dir+"\ccgsrdpscut.zip",dir+"\shortcuts")
+    LDZip.UnZip(dir+"\ccgsrdpscut.zip","C:\ccgsrdp-shortcuts")
+    LDControls.ProgressBarValue(pbar,99)
+    
+    Shapes.SetText(tlod,"Cleaning Temporary files...")
+    File.DeleteFile(LDFile.TempFolder+"\ccgsrdpdata.zip")
+    File.DeleteFile(dir+"\ccgsrdpscut.zip")
+    LDControls.ProgressBarValue(pbar,100)
+    
+    Shapes.SetText(tlod,"Update installaition finished!!!")
+    LDControls.ProgressBarValue(pbar,100)
+    LDSound.Beep()
+    LDInline.Call("sbrestart.main.restartprogram","restarted")
+    Program.End()
+  Else
+    Shapes.SetText(tlod,"Finish load...")
+    finishload()
+    LDControls.ProgressBarValue(pbar,100)
+  EndIf
+  loadend:
+EndSub
+
+Sub finishload
+  isconnected = "False"
+  LDControls.ComboBoxSelect(gui[1][2],indextoset)
+  Controls.ButtonClicked = onbuttonclk
+  LDEvents.Error = onerror
+  GraphicsWindow.Height = 150
+  GraphicsWindow.Width = 650
+  Shapes.HideShape(covshape)
+  Shapes.HideShape(tlod)
+  Shapes.HideShape(pbar)
+  Shapes.SetText(tlod,"Checking Connections...")
+EndSub
+
+'#onbutton
+Sub onbuttonclk
+  lastbutton = Controls.LastClickedButton
+  clkbutton = "True"
+EndSub
+
+Sub initgui
+  LDGraphicsWindow.ExitOnClose = "False"
+  LDGraphicsWindow.Closing = onclosetry
+  GraphicsWindow.FontSize = 32
+  gui[1][1] = Shapes.AddText("Select Connection:")
+  Shapes.Move(gui[1][1],50,15)
+  GraphicsWindow.FontSize = 16
+  gui[1][2] = LDControls.AddComboBox(list,550,150)
+  Shapes.Move(gui[1][2],50,65)
+  gui[1][3] = Controls.AddButton("Start",50,100)
+  gui[1][4] = Controls.AddButton("Help",280,100)
+  gui[1][5] = Controls.AddButton("About",430,100)
+  gui[1][6] = Controls.AddButton("Exit",520,100)
+  gui[1][7] = Controls.AddButton("Check For Updates",110,100)
+  start = gui[1][3]
+  help = gui[1][4]
+  about = gui[1][5]
+  exit = gui[1][6]
+  butupchk = gui[1][7]
+  cgui = 1 'define current gui.
+  LDControls.ProgressBarValue(pbar,70)
+  
+  GraphicsWindow.BrushColor = "Black"
+  GraphicsWindow.FontSize = 16
+  gui[2][1] = Shapes.AddText("%null%")
+  Shapes.Move(gui[2][1],15,15)
+  gui[2][2] = Controls.AddButton("Close",15,100)
+  gui[2][3] = Controls.AddButton("Yes",275,100)
+  gui[2][4] = Controls.AddButton("No",325,100)
+  close = gui[2][2]
+  yes = gui[2][3]
+  no = gui[2][4]
+  Shapes.HideShape(gui[2][1])
+  Shapes.HideShape(gui[2][2])
+  Shapes.HideShape(gui[2][3])
+  Shapes.HideShape(gui[2][4])
+  LDControls.ProgressBarValue(pbar,90)
+EndSub
+
+Sub hidegui
+  For y = 1 To Array.GetItemCount(gui[cgui])
+    Shapes.HideShape(gui[cgui][y])
+  EndFor
+EndSub
+
+Sub showgui
+  If cgui = 1 Then
+    GraphicsWindow.Height = 150
+    GraphicsWindow.Width = 650
+  Else
+    GraphicsWindow.Height = 140
+    GraphicsWindow.Width = 365
+  EndIf
+  For y = 1 To Array.GetItemCount(gui[cgui])
+    Shapes.ShowShape(gui[cgui][y])
+  EndFor
+EndSub
+
+Sub readdatafiles
+  data[1] = File.ReadLine(dir+"\data.txt",3)
+  If data[1] = "" Or array.IsArray(data[1]) <> "True" then
+    data[1] = File.ReadLine(dir+"\data",3)
+    If data[1] = "" Or array.IsArray(data[1]) <> "True" then
+      'error 6a no data.txt data file detected %fatal%
+      Shapes.ShowShape(covshape)
+      LDCursors.Invalid()
+      Shapes.SetText(tlod,"Ending... No data data file detected! Error code 6a")
+      LDControls.ProgressBarValue(pbar,100)
+      LDSound.Beep()
+      Program.Delay(1000)
+      LDSound.Beep()
+      Program.Delay(1000)
+      LDSound.Beep()
+      Program.End()
+    endif
+  endif
+  data[2] = File.ReadLine(dir+"\data.txt",4)
+  If data[2] = "" Or array.IsArray(data[2]) <> "True" then
+    data[2] = File.ReadLine(dir+"\data",4)
+    If data[2] = "" Or array.IsArray(data[2]) <> "True" then
+      'error 6b no alt data detected %fatal%
+      Shapes.ShowShape(covshape)
+      LDCursors.Invalid()
+      Shapes.SetText(tlod,"Ending... No alt data in data data file detected! Error code 6b")
+      LDControls.ProgressBarValue(pbar,100)
+      LDSound.Beep()
+      Program.Delay(1000)
+      LDSound.Beep()
+      Program.Delay(1000)
+      LDSound.Beep()
+      Program.End()
+    endif
+  endif
+  data[3] = File.ReadLine(dir+"\data.txt",1)
+  If data[3] = "" or LDUtilities.IsNumber(data[3]) <> "True" then
+    data[3] = File.ReadLine(dir+"\data",1)
+    If data[3] = "" or ldutilities.IsNumber(data[3]) <> "True"then
+      'error 6c no ver data detected %fatal%
+      Shapes.ShowShape(covshape)
+      LDCursors.Invalid()
+      Shapes.SetText(tlod,"Ending... No version data in data data file detected! Error code 6c")
+      LDControls.ProgressBarValue(pbar,100)
+      LDSound.Beep()
+      Program.Delay(1000)
+      LDSound.Beep()
+      Program.Delay(1000)
+      LDSound.Beep()
+      Program.End()
+    endif
+  endif
+  data[4] = File.ReadLine(dir+"\data.txt",2)
+  If data[4] = "" or ldutilities.IsNumber(data[4]) <> "True" then
+    data[4] = File.ReadLine(dir+"\data",2)
+    If data[4] = "" or ldutilities.IsNumber(data[4]) <> "True" then
+      'error 6d no minimum ver data detected %fatal%
+      Shapes.ShowShape(covshape)
+      LDCursors.Invalid()
+      Shapes.SetText(tlod,"Ending... No minimum version data in data data file detected! Error code 6d")
+      LDControls.ProgressBarValue(pbar,100)
+      LDSound.Beep()
+      Program.Delay(1000)
+      LDSound.Beep()
+      Program.Delay(1000)
+      LDSound.Beep()
+      Program.End()
+    endif
+  endif
+  data[5] = File.ReadLine(dir+"\data.txt",5)
+  If data[5] = "" then
+    data[5] = File.ReadLine(dir+"\data",5)
+    If data[5] = "" then
+      data[5] = "https://www.youtube.com/playlist?playnext=1&list=PLDQT33N0iG_5_sTmtbvQMiRTSiSeR5G12"
+    endif
+  endif
+  If data[4] > 1.3 Then
+    Shapes.SetText(tlod,"Ending... Update Found...")
+    LDControls.ProgressBarValue(pbar,100)
+    LDSound.Beep()
+    GraphicsWindow.ShowMessage("An Update Is Available: "+data[4]+"."+Text.GetCharacter(13)+Text.GetCharacter(10)+"The browser will now be launched with the youtube playlist and the program will now end.",GraphicsWindow.Title)
+    chk = LDProcess.Start("C:\Program Files\Internet Explorer\iexplore.exe",data[5])
+    If chk = "-1" Then
+      'error 3 could not start IE %minor%
+      LDSound.Beep()
+      GraphicsWindow.ShowMessage("Could not start IE, Error code 3.",GraphicsWindow.Title)
+    EndIf
+    Program.End()
+  EndIf
+  GraphicsWindow.Title = "CALM CCGS REMOTE DESKTOP LAUNCHER 1.3."+data[3]+" LOADING..."
+EndSub
+
+Sub ddatafiles
+  tmparr = Array.GetAllIndices(data[1])
+  aper = 1/(Array.GetItemCount(data[1])/20)
+  cper = 20
+  For i = 1 To Array.GetItemCount(data[1])
+    list[i] = tmparr[i]
+    files[i] = data[1][tmparr[i]]
+    cper = cper + aper
+    LDControls.ProgressBarValue(pbar,cper)
+  EndFor
+  alt = data[2]
+  LDControls.ProgressBarValue(pbar,50)
+EndSub
+
+Sub ping1
+  If doping then
+    chk = LDNetwork.Ping("www.ccgrammarschool.co.uk",5000)
+    If chk < 0 then
+      'error 1a no connection to www.ccgrammarschool.co.uk %minor%
+      Shapes.ShowShape(covshape)
+      Shapes.SetText(tlod,"No connection! Error code 1a")
+      LDSound.Beep()
+      Program.Delay(1000)
+      LDSound.Beep()
+      hasconnection = "False"
+    Else
+      hasconnection = "True"
+    endif
+  Else
+    hasconnection = "True"
+  EndIf 
+EndSub
+
+Sub ping2
+  If doping Then
+    chk = LDNetwork.Ping("www.youtube.com",5000)
+    If chk < 0 then
+      Shapes.ShowShape(covshape)
+      'error 1b no connection to www.youtube.com %minor%
+      Shapes.SetText(tlod,"No connection! Error code 1b")
+      LDSound.Beep()
+      Program.Delay(1000)
+      LDSound.Beep()
+      hasconnection2 = "False"
+    Else
+      hasconnection2 = "True"
+    endif
+  Else
+    hasconnection2 = "True"
+  EndIf 
+EndSub
+
+Sub ping3
+  If doping Then
+    chk = LDNetwork.Ping("sites.google.com",5000)
+    If chk < 0 then
+      Shapes.ShowShape(covshape)
+      'error 1c no connection to sites.google.com %minor%
+      Shapes.SetText(tlod,"No connection! Error code 1c")
+      LDSound.Beep()
+      Program.Delay(1000)
+      LDSound.Beep()
+      hasconnection3 = "False"
+    Else
+      hasconnection3 = "True"
+    endif
+  Else
+    hasconnection3 = "True"
+  EndIf 
+EndSub
+
+Sub ping4
+  If doping Then
+    chk = LDNetwork.Ping("captainalm.ddns.net",5000)
+    If chk < 0 then
+      Shapes.ShowShape(covshape)
+      'error 1d no connection to captainalm.ddns.net %minor%
+      Shapes.SetText(tlod,"No connection! Error code 1d")
+      LDSound.Beep()
+      Program.Delay(1000)
+      LDSound.Beep()
+      hasconnection4 = "False"
+    Else
+      hasconnection4 = "True"
+    endif
+  Else
+    hasconnection4 = "True"
+  EndIf 
+EndSub
+
+Sub onerror
+  'error 5 LitDev "code" error %minor%
+  LDSound.Beep()
+  GraphicsWindow.ShowMessage("LitDev Code Error("+LDEvents.LastError+"), Error code 5.",GraphicsWindow.Title)
+EndSub
+
+Sub onclosetry
+  LDGraphicsWindow.CancelClose = "True"
+  If cgui = 2 Then
+    If isconnected Then
+      chk = LDProcess.Stop(process)
+      If chk <> "True" then
+        ''error 4 could not stop MSTSC %minor%
+        LDSound.Beep()
+        GraphicsWindow.ShowMessage("Could not stop MSTSC (Microsoft Terminal Service Client), Error code 4.",GraphicsWindow.Title)
+      EndIf
+      isconnected = "False"
+      Shapes.SetText(gui[2][1],"Did Remote Desktop Connection Work?")
+      Shapes.ShowShape(gui[2][3])
+      Shapes.ShowShape(gui[2][4])
+      LDWindows.Active = 0
+    Else
+      hidegui()
+      cgui = 1
+      showgui()
+      LDWindows.Active = 0
+    EndIf
+  Else
+    Program.End()
+  EndIf
+EndSub
+
+Sub chkup
+  'ping update servers
+  ping3()
+  ping4()
+  
+  If hasconnection3 Or hasconnection4 Then
+    File.DeleteFile(LDFile.TempFolder+"\ccgsrdpup.txt")
+    upchk = ldinline.Call("calmsbdlwrapper.main.downloadfile","1="+website2+";2="+tmpfolder+"/ccgsrdpup.txt;")
+    If upchk = "False" Then
+      File.DeleteFile(LDFile.TempFolder+"\ccgsrdpup.txt")
+      upchk = ldinline.Call("calmsbdlwrapper.main.downloadfile","1="+website+";2="+tmpfolder+"/ccgsrdpup.txt;")
+      If upchk = "False" Then
+        hasupdate = "False"
+        Shapes.SetText(tlod,"Failed to check for updates!")
+        Program.Delay(1000)
+      Else
+        if data[3] < File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",1) Then
+          updathash = File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",2)
+          updatlink = File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",3)
+          hasupdate = "True"
+          Shapes.SetText(tlod,"Update avalible!")
+          LDSound.Beep()
+          Program.Delay(1000)
+        EndIf
+      EndIf
+    Else
+      if data[3] < File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",1) Then
+        updathash = File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",2)
+        updatlink = File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",3)
+        hasupdate = "True"
+        Shapes.SetText(tlod,"Update avalible!")
+        LDSound.Beep()
+        Program.Delay(1000)
+      EndIf
+    EndIf
+  Else
+    hasupdate = "False"
+    Shapes.SetText(tlod,"Failed to check for updates!")
+    Program.Delay(1000)
+  EndIf
+EndSub

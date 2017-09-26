@@ -1,0 +1,16 @@
+c:\users\alfred\documents\visual studio 2013\Projects\restartsblib\restartsblib\bin\Debug\restartsblib.dll
+c:\users\alfred\documents\visual studio 2013\Projects\restartsblib\restartsblib\bin\Debug\restartsblib.pdb
+c:\users\alfred\documents\visual studio 2013\Projects\restartsblib\restartsblib\bin\Debug\restartsblib.xml
+c:\users\alfred\documents\visual studio 2013\Projects\restartsblib\restartsblib\bin\Debug\SmallBasicLibrary.dll
+c:\users\alfred\documents\visual studio 2013\Projects\restartsblib\restartsblib\bin\Debug\SmallBasicLibrary.xml
+c:\users\alfred\documents\visual studio 2013\Projects\restartsblib\restartsblib\obj\Debug\restartsblib.vbprojResolveAssemblyReference.cache
+c:\users\alfred\documents\visual studio 2013\Projects\restartsblib\restartsblib\obj\Debug\sbrestart.Resources.resources
+c:\users\alfred\documents\visual studio 2013\Projects\restartsblib\restartsblib\obj\Debug\restartsblib.vbproj.GenerateResource.Cache
+c:\users\alfred\documents\visual studio 2013\Projects\restartsblib\restartsblib\obj\Debug\restartsblib.dll
+c:\users\alfred\documents\visual studio 2013\Projects\restartsblib\restartsblib\obj\Debug\restartsblib.xml
+c:\users\alfred\documents\visual studio 2013\Projects\restartsblib\restartsblib\obj\Debug\restartsblib.pdb
+C:\Users\Alfred\documents\visual studio 2013\Projects\restartsblib\restartsblib\bin\test\restartsblib.dll
+C:\Users\Alfred\documents\visual studio 2013\Projects\restartsblib\restartsblib\bin\test\restartsblib.pdb
+C:\Users\Alfred\documents\visual studio 2013\Projects\restartsblib\restartsblib\bin\test\restartsblib.xml
+C:\Users\Alfred\documents\visual studio 2013\Projects\restartsblib\restartsblib\bin\test\SmallBasicLibrary.dll
+C:\Users\Alfred\documents\visual studio 2013\Projects\restartsblib\restartsblib\bin\test\SmallBasicLibrary.xml

@@ -1,0 +1,5 @@
+1
+1.2
+Microsoft Office and Adobe Products (chsapps-1)=ccgs1.rdp;Computer Science (chsrapps) [no alternate available]=ccgs3.rdp;Solid Works (rhapps-1)=ccgs4.rdp;GIMP and Audacity (ccviapps-1) [no alternate available]=ccgs6.rdp;Microsoft Office and Adobe Products (chsapps-2) [alternate]=ccgs2.rdp;Solid Works (rhapps-2) [alternate]=ccgs5.rdp;
+1=5;3=6;5=1;6=3;
+https://www.youtube.com/playlist?playnext=1&list=PLDQT33N0iG_5_sTmtbvQMiRTSiSeR5G12
