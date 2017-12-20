@@ -1,0 +1,3 @@
+5
+297bf9d15db27a7a6af185e492e8004b
+https://raw.githubusercontent.com/Captain-ALM/ccgsrdpupdat/master/ccgsrdpdl.zip
