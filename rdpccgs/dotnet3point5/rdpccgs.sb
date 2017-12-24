@@ -11,10 +11,12 @@ hasconnection = "False"
 hasconnection2 = "False"
 hasconnection3 = "False"
 hasconnection4 = "False"
+hasconnection5 = "False"
 clkbutton = "False"
 process = 0
 website = "http://captainalm.ddns.net/download/ccgsrdp.txt"
 website2 = "https://sites.google.com/site/captainalm00000/download-index/ccgsrdp.txt"
+website3 = "https://raw.githubusercontent.com/Captain-ALM/ccgsrdpupdat/master/ccgsrdp.txt"
 hasupdate = "False"
 tmpfolder = LDText.Replace(LDFile.TempFolder,"\","/")
 forceupdateinst = "False"
@@ -26,7 +28,7 @@ hasupdate = "False"
 crlf = Text.GetCharacter(13) + Text.GetCharacter(10)
 
 GraphicsWindow.Show()
-GraphicsWindow.Title = "CALM CCGS REMOTE DESKTOP LAUNCHER 1.3.0 LOADING..."
+GraphicsWindow.Title = "CALM CCGS REMOTE DESKTOP LAUNCHER 1.4.0 LOADING..."
 LDCursors.Wait()
 LDUtilities.ShowErrors = "False"
 GraphicsWindow.CanResize = "False"
@@ -41,7 +43,7 @@ splash = Shapes.AddImage(splashimg)
 LDShapes.ZIndex(splash,7)
 init()
 LDCursors.Arrow()
-GraphicsWindow.Title = "CALM CCGS REMOTE DESKTOP LAUNCHER 1.3."+data[3]
+GraphicsWindow.Title = "CALM CCGS REMOTE DESKTOP LAUNCHER 1.4."+data[3]
 runtime()
 
 Sub readargs
@@ -95,6 +97,9 @@ Sub readargs
 EndSub
 
 Sub runtime
+  hidegui()
+  cgui = 1
+  showgui()
   While "True"
     If autostart Then
       autostart = "False"
@@ -141,7 +146,7 @@ Sub runtime
         Program.End()
       ElseIf lastbutton = about then
         LDSound.Beep()
-        GraphicsWindow.ShowMessage("About "+GraphicsWindow.Title+" on winx86 using .net framework 3.5, Created by Captain ALM (Independant developer).                   Program Distribution - GNU GENERAL PUBLIC LICENSE Version 3, June 2007.          (c) Captain ALM 2013-2017 (I allow Distribution(IaD))                                       Contact at: captainalm00000@gmail.com                                                                        Report Bugs on the youtube showcase  comments using the help button           (video for ver:1.3).",GraphicsWindow.Title)
+        GraphicsWindow.ShowMessage("About "+GraphicsWindow.Title+" on winx86 using .net framework 3.5, Created by Captain ALM (Independant developer)."+ crlf +"Program Distribution - GNU GENERAL PUBLIC LICENSE Version 3, June 2007."+ crlf +"(c) Captain ALM 2013-2017 (I allow Distribution(IaD))" + crlf + "Contact at: captainalm00000@gmail.com"+ crlf +"Report Bugs on the youtube showcase comments using the help button (or report as an issue on github) (video for ver:1.4).",GraphicsWindow.Title)
       elseif lastbutton = help then
         chk = LDProcess.Start("C:\Program Files\Internet Explorer\iexplore.exe",data[5])
         If chk = "-1" Then
@@ -289,6 +294,13 @@ Sub runtime
         hidegui()
         cgui = 1
         showgui()
+      ElseIf lastbutton = licbut then
+        chk = LDProcess.Start("C:\Program Files\Internet Explorer\iexplore.exe","https://www.gnu.org/licenses/gpl.txt")
+        If chk = "-1" Then
+          'error 3 could not start IE %minor%
+          LDSound.Beep()
+          GraphicsWindow.ShowMessage("Could not start IE, Error code 3.",GraphicsWindow.Title)
+        EndIf
       EndIf
       clkbutton = "False"
     EndIf
@@ -302,6 +314,7 @@ Sub runtime
         Shapes.ShowShape(gui[2][4])
         LDWindows.Active = 0
       EndIf
+      Program.Delay(350)
     EndIf
     Program.Delay(150)
   EndWhile
@@ -318,6 +331,7 @@ Sub init
   LDShapes.ZIndex(tlod,5)
   GraphicsWindow.Width = 500
   GraphicsWindow.Height = 150
+  LDWindows.Active = 0
   Program.Delay(50)
   readargs()
   LDShapes.ZIndex(splash,0)
@@ -331,12 +345,14 @@ Sub init
   
   Shapes.SetText(tlod,"Checking connections...")
   ping1()
-  LDControls.ProgressBarValue(pbar,3)
+  LDControls.ProgressBarValue(pbar,2)
   ping2()
-  LDControls.ProgressBarValue(pbar,5)
+  LDControls.ProgressBarValue(pbar,4)
   ping3()
-  LDControls.ProgressBarValue(pbar,8)
+  LDControls.ProgressBarValue(pbar,6)
   ping4()
+  LDControls.ProgressBarValue(pbar,8)
+  ping5()
   LDControls.ProgressBarValue(pbar,10)
   
   Shapes.SetText(tlod,"Loading data file...")
@@ -355,7 +371,7 @@ Sub init
   EndIf
   LDControls.ProgressBarValue(pbar,95)
   
-  If hasupdate or forceupdateinst Then
+  If hasupdate or forceupdateinst Then 
     LDControls.ProgressBarValue(pbar,100)
     Shapes.SetText(tlod,"Preparing to Update...")
     LDControls.ProgressBarValue(pbar,0)
@@ -424,6 +440,7 @@ Sub init
     LDControls.ProgressBarValue(pbar,100)
   EndIf
   loadend:
+  LDWindows.Active = 0
 EndSub
 
 Sub finishload
@@ -432,7 +449,6 @@ Sub finishload
   Controls.ButtonClicked = onbuttonclk
   LDEvents.Error = onerror
   GraphicsWindow.Height = 150
-  GraphicsWindow.Width = 650
   Shapes.HideShape(covshape)
   Shapes.HideShape(tlod)
   Shapes.HideShape(pbar)
@@ -452,18 +468,20 @@ Sub initgui
   gui[1][1] = Shapes.AddText("Select Connection:")
   Shapes.Move(gui[1][1],50,15)
   GraphicsWindow.FontSize = 16
-  gui[1][2] = LDControls.AddComboBox(list,550,150)
+  gui[1][2] = LDControls.AddComboBox(list,700,150)
   Shapes.Move(gui[1][2],50,65)
   gui[1][3] = Controls.AddButton("Start",50,100)
-  gui[1][4] = Controls.AddButton("Help",280,100)
-  gui[1][5] = Controls.AddButton("About",430,100)
-  gui[1][6] = Controls.AddButton("Exit",520,100)
-  gui[1][7] = Controls.AddButton("Check For Updates",110,100)
+  gui[1][4] = Controls.AddButton("Help",380,100)
+  gui[1][5] = Controls.AddButton("About",530,100)
+  gui[1][6] = Controls.AddButton("Exit",710,100)
+  gui[1][7] = Controls.AddButton("Check For Updates",160,100)
+  gui[1][8] = Controls.AddButton("License",440,100)
   start = gui[1][3]
   help = gui[1][4]
   about = gui[1][5]
   exit = gui[1][6]
   butupchk = gui[1][7]
+  licbut = gui[1][8]
   cgui = 1 'define current gui.
   LDControls.ProgressBarValue(pbar,70)
   
@@ -493,7 +511,7 @@ EndSub
 Sub showgui
   If cgui = 1 Then
     GraphicsWindow.Height = 150
-    GraphicsWindow.Width = 650
+    GraphicsWindow.Width = 800
   Else
     GraphicsWindow.Height = 140
     GraphicsWindow.Width = 365
@@ -505,9 +523,13 @@ EndSub
 
 Sub readdatafiles
   data[1] = File.ReadLine(dir+"\data.txt",3)
-  If data[1] = "" Or array.IsArray(data[1]) <> "True" then
+  If data[1] = "" then
+    data[1] = ""
+  ElseIf  array.IsArray(data[1]) <> "True" then
     data[1] = File.ReadLine(dir+"\data",3)
-    If data[1] = "" Or array.IsArray(data[1]) <> "True" then
+    If data[1] = "" then
+      data[1] = ""
+    ElseIf  array.IsArray(data[1]) <> "True" then
       'error 6a no data.txt data file detected %fatal%
       Shapes.ShowShape(covshape)
       LDCursors.Invalid()
@@ -522,9 +544,13 @@ Sub readdatafiles
     endif
   endif
   data[2] = File.ReadLine(dir+"\data.txt",4)
-  If data[2] = "" Or array.IsArray(data[2]) <> "True" then
+  If data[2] = "" then
+    data[2] = "0=0;"
+  ElseIf  array.IsArray(data[2]) <> "True" then
     data[2] = File.ReadLine(dir+"\data",4)
-    If data[2] = "" Or array.IsArray(data[2]) <> "True" then
+    If data[2] = "" then
+      data[2] = "0=0;"
+    ElseIf  array.IsArray(data[2]) <> "True" then
       'error 6b no alt data detected %fatal%
       Shapes.ShowShape(covshape)
       LDCursors.Invalid()
@@ -539,9 +565,13 @@ Sub readdatafiles
     endif
   endif
   data[3] = File.ReadLine(dir+"\data.txt",1)
-  If data[3] = "" or LDUtilities.IsNumber(data[3]) <> "True" then
+  If data[3] = "" then
+    data[3] = 0
+  ElseIf  ldutilities.IsNumber(data[3]) <> "True" then
     data[3] = File.ReadLine(dir+"\data",1)
-    If data[3] = "" or ldutilities.IsNumber(data[3]) <> "True"then
+    If data[3] = "" then
+      data[3] = 0
+    ElseIf  ldutilities.IsNumber(data[3]) <> "True" then
       'error 6c no ver data detected %fatal%
       Shapes.ShowShape(covshape)
       LDCursors.Invalid()
@@ -556,9 +586,13 @@ Sub readdatafiles
     endif
   endif
   data[4] = File.ReadLine(dir+"\data.txt",2)
-  If data[4] = "" or ldutilities.IsNumber(data[4]) <> "True" then
+  If data[4] = "" then
+    data[4] = 0
+  ElseIf  ldutilities.IsNumber(data[4]) <> "True" then
     data[4] = File.ReadLine(dir+"\data",2)
-    If data[4] = "" or ldutilities.IsNumber(data[4]) <> "True" then
+    If data[4] = "" then
+      data[4] = 0
+    ElseIf  ldutilities.IsNumber(data[4]) <> "True" then
       'error 6d no minimum ver data detected %fatal%
       Shapes.ShowShape(covshape)
       LDCursors.Invalid()
@@ -579,7 +613,7 @@ Sub readdatafiles
       data[5] = "https://www.youtube.com/playlist?playnext=1&list=PLDQT33N0iG_5_sTmtbvQMiRTSiSeR5G12"
     endif
   endif
-  If data[4] > 1.3 Then
+  If data[4] > 1.4 Then
     Shapes.SetText(tlod,"Ending... Update Found...")
     LDControls.ProgressBarValue(pbar,100)
     LDSound.Beep()
@@ -592,7 +626,7 @@ Sub readdatafiles
     EndIf
     Program.End()
   EndIf
-  GraphicsWindow.Title = "CALM CCGS REMOTE DESKTOP LAUNCHER 1.3."+data[3]+" LOADING..."
+  GraphicsWindow.Title = "CALM CCGS REMOTE DESKTOP LAUNCHER 1.4."+data[3]+" LOADING..."
 EndSub
 
 Sub ddatafiles
@@ -685,6 +719,25 @@ Sub ping4
   EndIf 
 EndSub
 
+Sub ping5
+  If doping Then
+    chk = LDNetwork.Ping("raw.github.com",5000)
+    If chk < 0 then
+      Shapes.ShowShape(covshape)
+      'error 1e no connection to raw.github.com %minor%
+      Shapes.SetText(tlod,"No connection! Error code 1e")
+      LDSound.Beep()
+      Program.Delay(1000)
+      LDSound.Beep()
+      hasconnection5 = "False"
+    Else
+      hasconnection5 = "True"
+    endif
+  Else
+    hasconnection5 = "True"
+  EndIf 
+EndSub
+
 Sub onerror
   'error 5 LitDev "code" error %minor%
   LDSound.Beep()
@@ -721,28 +774,14 @@ Sub chkup
   'ping update servers
   ping3()
   ping4()
+  ping5()
   
-  If hasconnection3 Or hasconnection4 Then
+  hasupdate = "False"
+  
+  If hasconnection5 And hasupdate = "False" Then
     File.DeleteFile(LDFile.TempFolder+"\ccgsrdpup.txt")
-    upchk = ldinline.Call("calmsbdlwrapper.main.downloadfile","1="+website2+";2="+tmpfolder+"/ccgsrdpup.txt;")
-    If upchk = "False" Then
-      File.DeleteFile(LDFile.TempFolder+"\ccgsrdpup.txt")
-      upchk = ldinline.Call("calmsbdlwrapper.main.downloadfile","1="+website+";2="+tmpfolder+"/ccgsrdpup.txt;")
-      If upchk = "False" Then
-        hasupdate = "False"
-        Shapes.SetText(tlod,"Failed to check for updates!")
-        Program.Delay(1000)
-      Else
-        if data[3] < File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",1) Then
-          updathash = File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",2)
-          updatlink = File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",3)
-          hasupdate = "True"
-          Shapes.SetText(tlod,"Update avalible!")
-          LDSound.Beep()
-          Program.Delay(1000)
-        EndIf
-      EndIf
-    Else
+    upchk = ldinline.Call("calmsbdlwrapper.main.downloadfile","1="+website3+";2="+tmpfolder+"/ccgsrdpup.txt;")
+    If upchk Then
       if data[3] < File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",1) Then
         updathash = File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",2)
         updatlink = File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",3)
@@ -750,9 +789,53 @@ Sub chkup
         Shapes.SetText(tlod,"Update avalible!")
         LDSound.Beep()
         Program.Delay(1000)
+      Else
+        hasupdate = "False"
       EndIf
+    Else
+      hasupdate = "False"
     EndIf
-  Else
+  EndIf 
+  
+  If hasconnection3 And hasupdate = "False" Then
+    File.DeleteFile(LDFile.TempFolder+"\ccgsrdpup.txt")
+    upchk = ldinline.Call("calmsbdlwrapper.main.downloadfile","1="+website2+";2="+tmpfolder+"/ccgsrdpup.txt;")
+    If upchk Then
+      if data[3] < File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",1) Then
+        updathash = File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",2)
+        updatlink = File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",3)
+        hasupdate = "True"
+        Shapes.SetText(tlod,"Update avalible!")
+        LDSound.Beep()
+        Program.Delay(1000)
+      Else
+        hasupdate = "False"
+      EndIf
+    Else
+      hasupdate = "False"
+    EndIf
+  EndIf
+  
+  If hasconnection4 And hasupdate = "False" Then
+    File.DeleteFile(LDFile.TempFolder+"\ccgsrdpup.txt")
+    upchk = ldinline.Call("calmsbdlwrapper.main.downloadfile","1="+website+";2="+tmpfolder+"/ccgsrdpup.txt;")
+    If upchk Then
+      if data[3] < File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",1) Then
+        updathash = File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",2)
+        updatlink = File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",3)
+        hasupdate = "True"
+        Shapes.SetText(tlod,"Update avalible!")
+        LDSound.Beep()
+        Program.Delay(1000)
+      Else
+        hasupdate = "False"
+      EndIf
+    Else
+      hasupdate = "False"
+    EndIf
+  EndIf
+  
+  If hasupdate = "False" And (hasconnection5 And hasconnection3 And hasconnection4) = "False" Then
     hasupdate = "False"
     Shapes.SetText(tlod,"Failed to check for updates!")
     Program.Delay(1000)
