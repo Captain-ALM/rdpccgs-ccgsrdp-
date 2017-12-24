@@ -1,3 +1,3 @@
-5
-297bf9d15db27a7a6af185e492e8004b
-https://raw.githubusercontent.com/Captain-ALM/ccgsrdpupdat/master/ccgsrdpdl.zip
+6
+a5beec86264f6ab86e0e19d1e8bb9fde
+https://raw.githubusercontent.com/Captain-ALM/ccgsrdpupdat/master/6.zip
