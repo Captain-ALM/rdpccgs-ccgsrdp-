@@ -1,0 +1,10 @@
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\calmsbdlwrapper\calmsbdlwrapper\bin\Release\calmsbdlwrapper.dll
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\calmsbdlwrapper\calmsbdlwrapper\bin\Release\calmsbdlwrapper.pdb
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\calmsbdlwrapper\calmsbdlwrapper\bin\Release\calmsbdlwrapper.xml
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\calmsbdlwrapper\calmsbdlwrapper\bin\Release\SmallBasicLibrary.dll
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\calmsbdlwrapper\calmsbdlwrapper\obj\Release\calmsbdlwrapper.vbprojResolveAssemblyReference.cache
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\calmsbdlwrapper\calmsbdlwrapper\obj\Release\calmsbdlwrapper.Resources.resources
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\calmsbdlwrapper\calmsbdlwrapper\obj\Release\calmsbdlwrapper.vbproj.GenerateResource.Cache
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\calmsbdlwrapper\calmsbdlwrapper\obj\Release\calmsbdlwrapper.dll
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\calmsbdlwrapper\calmsbdlwrapper\obj\Release\calmsbdlwrapper.xml
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\calmsbdlwrapper\calmsbdlwrapper\obj\Release\calmsbdlwrapper.pdb

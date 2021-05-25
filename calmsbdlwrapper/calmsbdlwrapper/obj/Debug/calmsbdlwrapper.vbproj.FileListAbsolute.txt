@@ -22,3 +22,13 @@ c:\users\alfred\documents\visual studio 2013\Projects\calmsbdlwrapper\calmsbdlwr
 c:\users\alfred\documents\visual studio 2013\Projects\calmsbdlwrapper\calmsbdlwrapper\bin\dotnet4point5\calmsbdlwrapper.xml
 c:\users\alfred\documents\visual studio 2013\Projects\calmsbdlwrapper\calmsbdlwrapper\bin\dotnet4point5\SmallBasicLibrary.dll
 c:\users\alfred\documents\visual studio 2013\Projects\calmsbdlwrapper\calmsbdlwrapper\bin\dotnet4point5\SmallBasicLibrary.xml
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\calmsbdlwrapper\calmsbdlwrapper\bin\dotnet4point5\calmsbdlwrapper.dll
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\calmsbdlwrapper\calmsbdlwrapper\bin\dotnet4point5\calmsbdlwrapper.pdb
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\calmsbdlwrapper\calmsbdlwrapper\bin\dotnet4point5\calmsbdlwrapper.xml
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\calmsbdlwrapper\calmsbdlwrapper\bin\dotnet4point5\SmallBasicLibrary.dll
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\calmsbdlwrapper\calmsbdlwrapper\obj\Debug\calmsbdlwrapper.vbprojResolveAssemblyReference.cache
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\calmsbdlwrapper\calmsbdlwrapper\obj\Debug\calmsbdlwrapper.Resources.resources
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\calmsbdlwrapper\calmsbdlwrapper\obj\Debug\calmsbdlwrapper.vbproj.GenerateResource.Cache
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\calmsbdlwrapper\calmsbdlwrapper\obj\Debug\calmsbdlwrapper.dll
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\calmsbdlwrapper\calmsbdlwrapper\obj\Debug\calmsbdlwrapper.xml
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\calmsbdlwrapper\calmsbdlwrapper\obj\Debug\calmsbdlwrapper.pdb
