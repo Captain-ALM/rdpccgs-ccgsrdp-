@@ -14,3 +14,13 @@ C:\Users\Alfred\documents\visual studio 2013\Projects\restartsblib\restartsblib\
 C:\Users\Alfred\documents\visual studio 2013\Projects\restartsblib\restartsblib\bin\test\restartsblib.xml
 C:\Users\Alfred\documents\visual studio 2013\Projects\restartsblib\restartsblib\bin\test\SmallBasicLibrary.dll
 C:\Users\Alfred\documents\visual studio 2013\Projects\restartsblib\restartsblib\bin\test\SmallBasicLibrary.xml
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\restartsblib\restartsblib\bin\test\restartsblib.dll
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\restartsblib\restartsblib\bin\test\restartsblib.pdb
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\restartsblib\restartsblib\bin\test\restartsblib.xml
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\restartsblib\restartsblib\obj\Debug\restartsblib.vbprojResolveAssemblyReference.cache
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\restartsblib\restartsblib\obj\Debug\sbrestart.Resources.resources
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\restartsblib\restartsblib\obj\Debug\restartsblib.vbproj.GenerateResource.Cache
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\restartsblib\restartsblib\obj\Debug\restartsblib.dll
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\restartsblib\restartsblib\obj\Debug\restartsblib.xml
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\restartsblib\restartsblib\obj\Debug\restartsblib.pdb
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\restartsblib\restartsblib\bin\test\SmallBasicLibrary.dll

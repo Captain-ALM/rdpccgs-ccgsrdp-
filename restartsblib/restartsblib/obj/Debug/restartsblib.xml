@@ -19,6 +19,27 @@ restartsblib
 	<summary>
   A strongly-typed resource class, for looking up localized strings, etc.
 </summary>
+</member><member name="M:sbrestart.main.restartprogram(Microsoft.SmallBasic.Library.Primitive)">
+	<summary>
+ Attempts to start the program with the specified arguments
+ Program.End() still needs to be called after!
+ </summary>
+	<param name="arguments">The arguments to pass to the started application</param>
+	<returns>The session ID of the started application</returns>
+	<remarks></remarks>
+</member><member name="M:sbrestart.main.restartprogramasadmin(Microsoft.SmallBasic.Library.Primitive)">
+	<summary>
+ Attempts to start the program with the specified arguments with a UAC prompt
+ Program.End() still needs to be called after!
+ </summary>
+	<param name="arguments">The arguments to pass to the started application</param>
+	<returns>The session ID of the started application</returns>
+	<remarks></remarks>
+</member><member name="T:sbrestart.main">
+	<summary>
+ Provides a way of starting the current application again
+ </summary>
+	<remarks></remarks>
 </member>
 </members>
 </doc>

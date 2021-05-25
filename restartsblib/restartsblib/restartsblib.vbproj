@@ -45,7 +45,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SmallBasicLibrary">
-      <HintPath>..\..\..\..\smallbasic_app\SmallBasicLibrary.dll</HintPath>
+      <HintPath>..\..\calmsbdlwrapper\sblibs35\SmallBasicLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

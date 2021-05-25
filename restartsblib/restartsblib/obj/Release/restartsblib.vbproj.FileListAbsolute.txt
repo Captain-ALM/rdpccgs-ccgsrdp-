@@ -1,0 +1,10 @@
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\restartsblib\restartsblib\obj\Release\sbrestart.Resources.resources
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\restartsblib\restartsblib\obj\Release\restartsblib.vbproj.GenerateResource.Cache
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\restartsblib\restartsblib\bin\Release\restartsblib.dll
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\restartsblib\restartsblib\bin\Release\restartsblib.pdb
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\restartsblib\restartsblib\bin\Release\restartsblib.xml
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\restartsblib\restartsblib\bin\Release\SmallBasicLibrary.dll
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\restartsblib\restartsblib\obj\Release\restartsblib.vbprojResolveAssemblyReference.cache
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\restartsblib\restartsblib\obj\Release\restartsblib.dll
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\restartsblib\restartsblib\obj\Release\restartsblib.xml
+F:\Users\alfred\Documents\git\rdpccgs-ccgsrdp-\restartsblib\restartsblib\obj\Release\restartsblib.pdb
