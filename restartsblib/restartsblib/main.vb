@@ -5,7 +5,7 @@ Imports System.Reflection
 ''' </summary>
 ''' <remarks></remarks>
 <SmallBasicType()>
-Public Module main
+Public Module mainrs
     ''' <summary>
     ''' Attempts to start the program with the specified arguments
     ''' Program.End() still needs to be called after!
