@@ -5,7 +5,7 @@ Imports System.Net
 ''' </summary>
 ''' <remarks></remarks>
 <SmallBasicType()>
-Public Module main
+Public Module SBDownloadExtension
     ''' <summary>
     ''' Downloads a file specified by the URL to the local file path
     ''' </summary>

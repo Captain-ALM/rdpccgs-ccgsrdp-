@@ -19,6 +19,26 @@ calmsbdlwrapper
 	<summary>
   A strongly-typed resource class, for looking up localized strings, etc.
 </summary>
+</member><member name="M:calmsbdlwrapper.SBDownloadExtension.downloadfile(Microsoft.SmallBasic.Library.Primitive,Microsoft.SmallBasic.Library.Primitive)">
+	<summary>
+ Downloads a file specified by the URL to the local file path
+ </summary>
+	<param name="fileurl">The remote URL of the file</param>
+	<param name="filelocal">The local target path of the file</param>
+	<returns>True on success, False on failure</returns>
+	<remarks></remarks>
+</member><member name="M:calmsbdlwrapper.SBDownloadExtension.downloadstring(Microsoft.SmallBasic.Library.Primitive)">
+	<summary>
+ Downloads a string specified by the URL and returns it
+ </summary>
+	<param name="fileurl">The remote URL of the file</param>
+	<returns>The downloaded or blank string</returns>
+	<remarks></remarks>
+</member><member name="T:calmsbdlwrapper.SBDownloadExtension">
+	<summary>
+ This module provides the ability to download files and strings
+ </summary>
+	<remarks></remarks>
 </member>
 </members>
 </doc>
