@@ -1,5 +1,5 @@
 'Program Distribution - GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
-'(c) Captain ALM 2013-2017 (I allow Distribution(IaD))
+'(c) Captain ALM 2013-2021 (I allow Distribution(IaD))
 dir = Program.Directory
 list = ""
 files = ""
@@ -10,13 +10,9 @@ isconnected = ""
 hasconnection = "False"
 hasconnection2 = "False"
 hasconnection3 = "False"
-hasconnection4 = "False"
-hasconnection5 = "False"
 clkbutton = "False"
 process = 0
-website = "http://captainalm.ddns.net/download/ccgsrdp.txt"
-website2 = "https://sites.google.com/site/captainalm00000/download-index/ccgsrdp.txt"
-website3 = "https://raw.githubusercontent.com/Captain-ALM/ccgsrdpupdat/master/ccgsrdp.txt"
+website = "https://raw.githubusercontent.com/Captain-ALM/rdpccgs-ccgsrdp-/updates/ccgsrdp.txt"
 hasupdate = "False"
 tmpfolder = LDText.Replace(LDFile.TempFolder,"\","/")
 forceupdateinst = "False"
@@ -28,7 +24,7 @@ hasupdate = "False"
 crlf = Text.GetCharacter(13) + Text.GetCharacter(10)
 
 GraphicsWindow.Show()
-GraphicsWindow.Title = "CALM CCGS REMOTE DESKTOP LAUNCHER 1.4.0 LOADING..."
+GraphicsWindow.Title = "CALM CCGS REMOTE DESKTOP LAUNCHER 1.5.0 LOADING..."
 LDCursors.Wait()
 LDUtilities.ShowErrors = "False"
 GraphicsWindow.CanResize = "False"
@@ -43,7 +39,7 @@ splash = Shapes.AddImage(splashimg)
 LDShapes.ZIndex(splash,7)
 init()
 LDCursors.Arrow()
-GraphicsWindow.Title = "CALM CCGS REMOTE DESKTOP LAUNCHER 1.4."+data[3]
+GraphicsWindow.Title = "CALM CCGS REMOTE DESKTOP LAUNCHER 1.5."+data[3]
 runtime()
 
 Sub readargs
@@ -146,7 +142,7 @@ Sub runtime
         Program.End()
       ElseIf lastbutton = about then
         LDSound.Beep()
-        GraphicsWindow.ShowMessage("About "+GraphicsWindow.Title+" on winx86 using .net framework 3.5, Created by Captain ALM (Independant developer)."+ crlf +"Program Distribution - GNU GENERAL PUBLIC LICENSE Version 3, June 2007."+ crlf +"(c) Captain ALM 2013-2017 (I allow Distribution(IaD))" + crlf + "Contact at: captainalm00000@gmail.com"+ crlf +"Report Bugs on the youtube showcase comments using the help button (or report as an issue on github) (video for ver:1.4).",GraphicsWindow.Title)
+        GraphicsWindow.ShowMessage("About "+GraphicsWindow.Title+" on winx86 using .net framework 3.5, Created by Captain ALM (Independant developer)."+ crlf +"Program Distribution - GNU GENERAL PUBLIC LICENSE Version 3, June 2007."+ crlf +"(c) Captain ALM 2013-2021 (I allow Distribution(IaD))" + crlf + "Contact at: captainalm00000@gmail.com",GraphicsWindow.Title)
       elseif lastbutton = help then
         chk = LDProcess.Start("C:\Program Files\Internet Explorer\iexplore.exe",data[5])
         If chk = "-1" Then
@@ -235,7 +231,7 @@ Sub runtime
           
           LDSound.Beep()
           Shapes.SetText(tlod,"Downloading Update...")
-          upchk = ldinline.Call("calmsbdlwrapper.main.downloadfile","1="+updatlink+";2="+tmpfolder+"/ccgsrdpdata.zip;")
+          upchk = SBDownloadExtension.downloadfile(updatlink, tmpfolder+"/ccgsrdpdata.zip")
           If upchk = "false" Then
             Shapes.SetText(tlod,"Update download failed...")
             LDControls.ProgressBarValue(pbar,100)
@@ -284,7 +280,7 @@ Sub runtime
           Shapes.SetText(tlod,"Update installaition finished!!!")
           LDControls.ProgressBarValue(pbar,100)
           LDSound.Beep()
-          LDInline.Call("sbrestart.main.restartprogram","restarted")
+          SBRelaunchExtension.relaunchprogram("restarted")
           Program.End()
         EndIf
         loadend2:
@@ -312,7 +308,6 @@ Sub runtime
         Shapes.SetText(gui[2][1],"Did Remote Desktop Connection Work?")
         Shapes.ShowShape(gui[2][3])
         Shapes.ShowShape(gui[2][4])
-        LDWindows.Active = 0
       EndIf
       Program.Delay(350)
     EndIf
@@ -331,7 +326,6 @@ Sub init
   LDShapes.ZIndex(tlod,5)
   GraphicsWindow.Width = 500
   GraphicsWindow.Height = 150
-  LDWindows.Active = 0
   Program.Delay(50)
   readargs()
   LDShapes.ZIndex(splash,0)
@@ -340,19 +334,13 @@ Sub init
   Shapes.SetOpacity(covshape,45)
   LDShapes.ZIndex(covshape,3)
   Shapes.HideShape(covshape)
-  LDInline.LoadDLL(dir+"\calmsbdlwrapper.dll")
-  LDInline.LoadDLL(dir+"\restartsblib.dll")
   
   Shapes.SetText(tlod,"Checking connections...")
   ping1()
-  LDControls.ProgressBarValue(pbar,2)
-  ping2()
   LDControls.ProgressBarValue(pbar,4)
-  ping3()
+  ping2()
   LDControls.ProgressBarValue(pbar,6)
-  ping4()
-  LDControls.ProgressBarValue(pbar,8)
-  ping5()
+  ping3()
   LDControls.ProgressBarValue(pbar,10)
   
   Shapes.SetText(tlod,"Loading data file...")
@@ -381,7 +369,7 @@ Sub init
     
     LDSound.Beep()
     Shapes.SetText(tlod,"Downloading Update...")
-    upchk = ldinline.Call("calmsbdlwrapper.main.downloadfile","1="+updatlink+";2="+tmpfolder+"/ccgsrdpdata.zip;")
+    upchk = SBDownloadExtension.downloadfile(updatlink, tmpfolder+"/ccgsrdpdata.zip")
     If upchk = "false" Then
       Shapes.SetText(tlod,"Update download failed...")
       LDControls.ProgressBarValue(pbar,100)
@@ -432,7 +420,7 @@ Sub init
     Shapes.SetText(tlod,"Update installaition finished!!!")
     LDControls.ProgressBarValue(pbar,100)
     LDSound.Beep()
-    LDInline.Call("sbrestart.main.restartprogram","restarted")
+    SBRelaunchExtension.relaunchprogram("restarted")
     Program.End()
   Else
     Shapes.SetText(tlod,"Finish load...")
@@ -440,7 +428,6 @@ Sub init
     LDControls.ProgressBarValue(pbar,100)
   EndIf
   loadend:
-  LDWindows.Active = 0
 EndSub
 
 Sub finishload
@@ -524,11 +511,11 @@ EndSub
 Sub readdatafiles
   data[1] = File.ReadLine(dir+"\data.txt",3)
   If data[1] = "" then
-    data[1] = ""
+    data[1] = "NO DATA=.rdp;"
   ElseIf  array.IsArray(data[1]) <> "True" then
     data[1] = File.ReadLine(dir+"\data",3)
     If data[1] = "" then
-      data[1] = ""
+      data[1] = "NO DATA=.rdp;"
     ElseIf  array.IsArray(data[1]) <> "True" then
       'error 6a no data.txt data file detected %fatal%
       Shapes.ShowShape(covshape)
@@ -613,7 +600,7 @@ Sub readdatafiles
       data[5] = "https://www.youtube.com/playlist?playnext=1&list=PLDQT33N0iG_5_sTmtbvQMiRTSiSeR5G12"
     endif
   endif
-  If data[4] > 1.4 Then
+  If data[4] > 1.5 Then
     Shapes.SetText(tlod,"Ending... Update Found...")
     LDControls.ProgressBarValue(pbar,100)
     LDSound.Beep()
@@ -626,7 +613,7 @@ Sub readdatafiles
     EndIf
     Program.End()
   EndIf
-  GraphicsWindow.Title = "CALM CCGS REMOTE DESKTOP LAUNCHER 1.4."+data[3]+" LOADING..."
+  GraphicsWindow.Title = "CALM CCGS REMOTE DESKTOP LAUNCHER 1.5."+data[3]+" LOADING..."
 EndSub
 
 Sub ddatafiles
@@ -645,9 +632,9 @@ EndSub
 
 Sub ping1
   If doping then
-    chk = LDNetwork.Ping("www.ccgrammarschool.co.uk",5000)
+    chk = LDNetwork.Ping("portal.ccgrammarschool.co.uk",5000)
     If chk < 0 then
-      'error 1a no connection to www.ccgrammarschool.co.uk %minor%
+      'error 1a no connection to portal.ccgrammarschool.co.uk %minor%
       Shapes.ShowShape(covshape)
       Shapes.SetText(tlod,"No connection! Error code 1a")
       LDSound.Beep()
@@ -683,11 +670,11 @@ EndSub
 
 Sub ping3
   If doping Then
-    chk = LDNetwork.Ping("sites.google.com",5000)
+    chk = LDNetwork.Ping("raw.githubusercontent.com",5000)
     If chk < 0 then
       Shapes.ShowShape(covshape)
-      'error 1c no connection to sites.google.com %minor%
-      Shapes.SetText(tlod,"No connection! Error code 1c")
+      'error 1e no connection to raw.githubusercontent.com %minor%
+      Shapes.SetText(tlod,"No connection! Error code 1e")
       LDSound.Beep()
       Program.Delay(1000)
       LDSound.Beep()
@@ -697,44 +684,6 @@ Sub ping3
     endif
   Else
     hasconnection3 = "True"
-  EndIf 
-EndSub
-
-Sub ping4
-  If doping Then
-    chk = LDNetwork.Ping("captainalm.ddns.net",5000)
-    If chk < 0 then
-      Shapes.ShowShape(covshape)
-      'error 1d no connection to captainalm.ddns.net %minor%
-      Shapes.SetText(tlod,"No connection! Error code 1d")
-      LDSound.Beep()
-      Program.Delay(1000)
-      LDSound.Beep()
-      hasconnection4 = "False"
-    Else
-      hasconnection4 = "True"
-    endif
-  Else
-    hasconnection4 = "True"
-  EndIf 
-EndSub
-
-Sub ping5
-  If doping Then
-    chk = LDNetwork.Ping("raw.github.com",5000)
-    If chk < 0 then
-      Shapes.ShowShape(covshape)
-      'error 1e no connection to raw.github.com %minor%
-      Shapes.SetText(tlod,"No connection! Error code 1e")
-      LDSound.Beep()
-      Program.Delay(1000)
-      LDSound.Beep()
-      hasconnection5 = "False"
-    Else
-      hasconnection5 = "True"
-    endif
-  Else
-    hasconnection5 = "True"
   EndIf 
 EndSub
 
@@ -758,12 +707,10 @@ Sub onclosetry
       Shapes.SetText(gui[2][1],"Did Remote Desktop Connection Work?")
       Shapes.ShowShape(gui[2][3])
       Shapes.ShowShape(gui[2][4])
-      LDWindows.Active = 0
     Else
       hidegui()
       cgui = 1
       showgui()
-      LDWindows.Active = 0
     EndIf
   Else
     Program.End()
@@ -773,33 +720,12 @@ EndSub
 Sub chkup
   'ping update servers
   ping3()
-  ping4()
-  ping5()
   
   hasupdate = "False"
   
-  If hasconnection5 And hasupdate = "False" Then
-    File.DeleteFile(LDFile.TempFolder+"\ccgsrdpup.txt")
-    upchk = ldinline.Call("calmsbdlwrapper.main.downloadfile","1="+website3+";2="+tmpfolder+"/ccgsrdpup.txt;")
-    If upchk Then
-      if data[3] < File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",1) Then
-        updathash = File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",2)
-        updatlink = File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",3)
-        hasupdate = "True"
-        Shapes.SetText(tlod,"Update avalible!")
-        LDSound.Beep()
-        Program.Delay(1000)
-      Else
-        hasupdate = "False"
-      EndIf
-    Else
-      hasupdate = "False"
-    EndIf
-  EndIf 
-  
   If hasconnection3 And hasupdate = "False" Then
     File.DeleteFile(LDFile.TempFolder+"\ccgsrdpup.txt")
-    upchk = ldinline.Call("calmsbdlwrapper.main.downloadfile","1="+website2+";2="+tmpfolder+"/ccgsrdpup.txt;")
+    upchk = SBDownloadExtension.downloadfile(website, tmpfolder+"\ccgsrdpup.txt")
     If upchk Then
       if data[3] < File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",1) Then
         updathash = File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",2)
@@ -816,26 +742,7 @@ Sub chkup
     EndIf
   EndIf
   
-  If hasconnection4 And hasupdate = "False" Then
-    File.DeleteFile(LDFile.TempFolder+"\ccgsrdpup.txt")
-    upchk = ldinline.Call("calmsbdlwrapper.main.downloadfile","1="+website+";2="+tmpfolder+"/ccgsrdpup.txt;")
-    If upchk Then
-      if data[3] < File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",1) Then
-        updathash = File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",2)
-        updatlink = File.ReadLine(LDFile.TempFolder+"\ccgsrdpup.txt",3)
-        hasupdate = "True"
-        Shapes.SetText(tlod,"Update avalible!")
-        LDSound.Beep()
-        Program.Delay(1000)
-      Else
-        hasupdate = "False"
-      EndIf
-    Else
-      hasupdate = "False"
-    EndIf
-  EndIf
-  
-  If hasupdate = "False" And (hasconnection5 And hasconnection3 And hasconnection4) = "False" Then
+  If hasupdate = "False" And hasconnection3 = "False" Then
     hasupdate = "False"
     Shapes.SetText(tlod,"Failed to check for updates!")
     Program.Delay(1000)
