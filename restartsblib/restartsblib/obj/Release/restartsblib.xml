@@ -19,7 +19,7 @@ restartsblib
 	<summary>
   A strongly-typed resource class, for looking up localized strings, etc.
 </summary>
-</member><member name="M:sbrestart.mainrs.restartprogram(Microsoft.SmallBasic.Library.Primitive)">
+</member><member name="M:sbrestart.SBRelaunchExtension.relaunchprogram(Microsoft.SmallBasic.Library.Primitive)">
 	<summary>
  Attempts to start the program with the specified arguments
  Program.End() still needs to be called after!
@@ -27,7 +27,7 @@ restartsblib
 	<param name="arguments">The arguments to pass to the started application</param>
 	<returns>The session ID of the started application</returns>
 	<remarks></remarks>
-</member><member name="M:sbrestart.mainrs.restartprogramasadmin(Microsoft.SmallBasic.Library.Primitive)">
+</member><member name="M:sbrestart.SBRelaunchExtension.relaunchprogramasadmin(Microsoft.SmallBasic.Library.Primitive)">
 	<summary>
  Attempts to start the program with the specified arguments with a UAC prompt
  Program.End() still needs to be called after!
@@ -35,7 +35,13 @@ restartsblib
 	<param name="arguments">The arguments to pass to the started application</param>
 	<returns>The session ID of the started application</returns>
 	<remarks></remarks>
-</member><member name="T:sbrestart.mainrs">
+</member><member name="M:sbrestart.SBRelaunchExtension.programPath">
+	<summary>
+ Gets the path of the executing assembly
+ </summary>
+	<returns>The path of the executing assembly</returns>
+	<remarks></remarks>
+</member><member name="T:sbrestart.SBRelaunchExtension">
 	<summary>
  Provides a way of starting the current application again
  </summary>
