@@ -1,5 +1,5 @@
-6
-1.4
-Microsoft Office, DT, SIMS & Adobe Products (claapps-4) [no alternate available]=ccgs1.rdp;Computer Science Applications & Audacity & GIMP (chsrapps) [no alternate available]=ccgs3.rdp;Solid Works & DT Applications (rhapps-1) [no alternate available]=ccgs4.rdp;Math and Music and Test Products (claapps-3) [no alternate available]=ccgs7.rdp;Music and Test Products (claapps-6) [no alternate available]=ccgs2.rdp;
+0
+1.5
+
 
 https://www.youtube.com/playlist?playnext=1&list=PLDQT33N0iG_5_sTmtbvQMiRTSiSeR5G12
