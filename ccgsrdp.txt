@@ -1,3 +1,3 @@
-8
-c08fd70bd09af37926b5f7bd24cb54de
-https://raw.githubusercontent.com/Captain-ALM/ccgsrdpupdat/master/8.zip
+9
+06af0198f343920d502e4f6947237b94
+https://raw.githubusercontent.com/Captain-ALM/rdpccgs-ccgsrdp-/updates/ccgsrdpdl.zip
